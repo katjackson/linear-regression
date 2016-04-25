@@ -1,4 +1,4 @@
-
+"""Ground Cricket Chirps"""
 # import grasshopper data
 ground_cricket_data = {"Chirps/Second": [20.0, 16.0, 19.8, 18.4, 17.1, 15.5, 14.7,
                                          15.7, 15.4, 16.3, 15.0, 17.2, 16.0, 17.0,
@@ -42,3 +42,26 @@ regr.predict(95)
 # predict the feature based on a hypothetical response 18
 # used algebra to solve for x in y = regr.intercept_ + (regr.coef_ * x)
 (18 - regr.intercept_) / regr.coef_
+
+"""Brain vs. Body Weight"""
+# import data
+bb = pd.read_fwf('brain_body.txt')
+
+# instantiate LinearRegression class
+bb_regr = linear_model.LinearRegression()
+
+# define variables
+X = bb['Brain'].to_frame()
+y = bb['Body']
+
+# fit the object to the data
+bb_regr.fit(X, y)
+
+# plot using equation
+plt.scatter(X, y, s=10)
+# use attributes to plot linear regression equation
+# y = β0 + β1x where β0 is intercept and β1 is coefficient
+plt.plot(X, (bb_regr.intercept_ + (bb_regr.coef_ * X)))
+
+# calculate the r-squared score (or coefficient of determination)
+bb_regr.score(X, y)
